@@ -57,6 +57,20 @@ class DataPreprocessor:
         allowed_rarities = ['Rare Holo', 'Rare', 'Uncommon', 'Common']
         self.data = self.data[self.data['rarity'].isin(allowed_rarities)]
 
+        # Rimuovere i Pokémon che non sono di subtypes "Basic", "Stage1", "Stage2"
+        allowed_subtypes = ['Basic', 'Stage 1', 'Stage 2']
+
+        def filter_subtypes(subtypes):
+            try:
+                subtypes_list = ast.literal_eval(subtypes)
+                if isinstance(subtypes_list, list) and all(subtype in allowed_subtypes for subtype in subtypes_list):
+                    return True
+            except (ValueError, SyntaxError):
+                pass
+            return False
+
+        self.data = self.data[self.data['subtypes'].apply(filter_subtypes)]
+
         cols_to_remove = ['set', 'series', 'publisher', 'release_date', 'artist', 'set_num', 'level', 
                           'abilities', 'retreatCost', 'convertedRetreatCost', 'flavorText', 
                           'nationalPokedexNumbers', 'legalities', 'resistances', 'rules', 
@@ -90,10 +104,6 @@ class DataPreprocessor:
         self.data['AVG_damage'] = self.data['AVG_damage'].replace(0, self.data['AVG_damage'].mean())
         # Build the evolution hierarchy and create the gerarchic column
         self.build_evolution_hierarchy()
-
-    #def save_data(self, output_file_path):
-        # Salva i dati in un nuovo file CSV
-        #self.data.to_csv(output_file_path, index=False)
     
 
 
@@ -111,6 +121,11 @@ class DataPreprocessor:
 
         # Assicura che la cartella "CSV" esista
         output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Sort the DataFrame by the 'subtypes' column
+        #self.data = self.data.sort_values(by='subtypes')
+        #self.data = self.data.sort_values(by='generation')
+
 
         # Salva il file CSV
         self.data.to_csv(output_file_path, index=False, encoding="utf-8")

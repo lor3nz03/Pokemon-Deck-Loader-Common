@@ -14,9 +14,9 @@ class Main:
         processed_data = preprocessor.get_processed_data()
         
         # Step 2: Clustering
-        clustering = PokemonClustering(processed_data)
-        clustering.apply_kmeans(n_clusters=3)
-        clustering.visualize_clusters()
+        #clustering = PokemonClustering(processed_data)
+        #clustering.apply_kmeans(n_clusters=3)
+        #clustering.visualize_clusters()
 
 
         # Step 3: Deck Building

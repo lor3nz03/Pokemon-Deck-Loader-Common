@@ -10,12 +10,12 @@ class PokemonClustering:
         self.data = data
         self.cluster_labels = None
         self.kmeans = None
-
+    # Ho deciso di basare il clustering sugli Hp e il Damage del pokemon
     def preprocess_features(self):
         features = self.data[['hp', 'AVG_damage']]
         self.scaler = StandardScaler()
         return self.scaler.fit_transform(features)
-
+    # Mi serve per vedere graficamente quanti cluster mi ottimizzano la suddivisione 
     def elbow_method(self, max_clusters=10):
         X = self.preprocess_features()
         distortions = []
@@ -23,13 +23,16 @@ class PokemonClustering:
             kmeans = KMeans(n_clusters=i, random_state=42, n_init=10)
             kmeans.fit(X)
             distortions.append(kmeans.inertia_)
-        
+        # Plotto tutto a schermo
         plt.figure(figsize=(10, 6))
         plt.plot(range(1, max_clusters + 1), distortions, marker='o')
-        plt.xlabel('Number of clusters')
-        plt.ylabel('Distortion')
-        plt.title('Elbow Method For Optimal Number of Clusters')
+        plt.xlabel('Numero di Cluster')
+        plt.ylabel('Distorsione')
+        plt.title('Elbow Method')
         plt.show()
+
+
+    # Scrivo 4 metodi per applicare il clustering con Kmeans,Dbscan,Optics, e cluster Gerarchico
 
     def apply_kmeans(self, n_clusters=3):
         X = self.preprocess_features()
@@ -55,6 +58,7 @@ class PokemonClustering:
         self.cluster_labels = agglomerative.fit_predict(X)
         self.data['cluster'] = self.cluster_labels
 
+    # Metodo da richiamare nel main per poter scegliere che tipo di clusterizzazione utilizzare
     def cluster(self, method='kmeans', **kwargs):
         if method == 'kmeans':
             self.apply_kmeans(**kwargs)
@@ -67,13 +71,12 @@ class PokemonClustering:
         else:
             raise ValueError(f"Clustering method '{method}' is not supported.")
 
+    # Visualizzo tutti i punti del cluster tramite una PCA a 2 dimensioni e evidenzio i centroidi 
     def visualize_clusters(self):
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(self.preprocess_features())
-        
         plt.figure(figsize=(10, 6))
         sns.scatterplot(x=X_pca[:,0], y=X_pca[:,1], hue=self.cluster_labels, palette='viridis', legend='full')
-        
         if hasattr(self.kmeans, 'cluster_centers_'):
             centers_pca = pca.transform(self.kmeans.cluster_centers_)
             plt.scatter(centers_pca[:, 0], centers_pca[:, 1], s=300, c='red', marker='X', label='Centroids')
@@ -84,6 +87,7 @@ class PokemonClustering:
         plt.legend(title='Cluster')
         plt.show()
 
+    # Per praticita ho creato una funzione che mi salvi la suddivisone dei pokemon nei cluster in un file.txt
     def save_clusters_to_file(self, filename='list.txt'):
         parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
         file_path = os.path.join(parent_dir, filename)

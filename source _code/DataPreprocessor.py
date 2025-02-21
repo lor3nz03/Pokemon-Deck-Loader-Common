@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import ast
 from pathlib import Path
+
 class DataPreprocessor:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -112,13 +113,11 @@ class DataPreprocessor:
         self.data['hp'] = pd.to_numeric(self.data['hp'], errors='coerce').fillna(0)
         # Assicurarsi che i valori di AVG_damage non siano zero
         self.data['AVG_damage'] = self.data['AVG_damage'].replace(0, self.data['AVG_damage'].mean())
+        # Arrotondare i valori di AVG_damage a numeri interi
+        self.data['AVG_damage'] = self.data['AVG_damage'].round().astype(int)
         # Build the evolution hierarchy and create the gerarchic column
         self.build_evolution_hierarchy()
         self.data.drop(columns='evolveTo2', inplace=True, errors='ignore')
-    
-
-
-  
 
     def save_data(self, output_file_name):
         # Trova la cartella "Project" salendo da "source_code"
@@ -137,11 +136,8 @@ class DataPreprocessor:
         #self.data = self.data.sort_values(by='subtypes')
         #self.data = self.data.sort_values(by='generation')
 
-
         # Salva il file CSV
         self.data.to_csv(output_file_path, index=False, encoding="utf-8")
-
-        
 
     def print_rarity_types(self):
         # Extract unique rarity types

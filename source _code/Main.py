@@ -14,9 +14,13 @@ class Main:
         processed_data = preprocessor.get_processed_data()
         
         # Step 2: Clustering
-        #clustering = PokemonClustering(processed_data)
-        #clustering.apply_kmeans(n_clusters=3)
-        #clustering.visualize_clusters()
+        clustering = PokemonClustering(processed_data)
+        clustering.elbow_method(max_clusters=10)  # Determina il numero ottimale di cluster
+        # Dopo aver osservato il grafico, scegli il numero ottimale di cluster
+        optimal_clusters = 3  # Sostituisci con il numero ottimale di cluster trovato
+        clustering.cluster(method='kmeans', n_clusters=optimal_clusters)
+        clustering.visualize_clusters()
+        clustering.save_clusters_to_file('list.txt')
 
 
         # Step 3: Deck Building

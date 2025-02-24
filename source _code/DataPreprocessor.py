@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import ast
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 class DataPreprocessor:
     def __init__(self, file_path):
@@ -146,3 +147,34 @@ class DataPreprocessor:
 
     def get_processed_data(self):
         return self.data
+
+    #Visualizzo a video in modo immediato il numero di pokemon divisi per generazioni
+    def plot_pokemon_by_generation(self):
+        generation_counts = self.data['generation'].value_counts().sort_index()
+        generation_counts.plot(kind='bar', color='skyblue')
+        plt.title('Number of Pokémon by Generation')
+        plt.xlabel('Generation')
+        plt.ylabel('Number of Pokémon')
+        plt.xticks(rotation=0)
+        plt.show()
+
+    #Visualizzo a video in modo immediato il numero di pokemon divisi per artista
+    def plot_cards_by_artist(self):
+        artist_counts = self.data['artist'].value_counts().head(10)  # Plot top 10 artists
+        artist_counts.plot(kind='bar', color='lightgreen')
+        plt.title('Number of Cards by Artist')
+        plt.xlabel('Artist')
+        plt.ylabel('Number of Cards')
+        plt.xticks(rotation=45, ha='right')
+        plt.show()
+
+    #Visualizzo a video in modo immediato il numero di pokemon divisi per tipo
+    def plot_pokemon_by_type(self):
+        self.data['types'] = self.data['types'].astype(str)  # Tramite questa linea di codice mi assicuro che sono tutte stringhe
+        type_counts = self.data['types'].apply(lambda x: x.strip("[]").replace("'", "").split(", ")).explode().value_counts()
+        type_counts.plot(kind='bar', color='salmon')
+        plt.title('Number of Pokémon by Type')
+        plt.xlabel('Type')
+        plt.ylabel('Number of Pokémon')
+        plt.xticks(rotation=45, ha='right')
+        plt.show()

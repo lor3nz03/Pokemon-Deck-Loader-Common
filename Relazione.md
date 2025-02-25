@@ -30,6 +30,6 @@ Applico una PCA per visualizzare i dati.
 Una volta suddivisi i pokemon in cluster è arrivato il momento della creazione dei mazzi formati da 12 pokemon, per la creazione prendo sempre in considerazione hp e damage di ogni pokemon, nella creazione dei mazzi si tengono in considerazione le evoluzioni di ogni pokemon e vengono aggiunte, infatti per esempio in un mazzo non potrebbe mai esserci un "Charizard" senza un "Charmeleon" e un "Charmander", per andare ad inserire queste evoluzioni mi è stata molto utile la feature "gerarchic" precedentemente creata durante la fase di preprocessing.
 Infine una volta creati i mezzi vengono classificati in 3 categorie che rispecchiano un po' gli stili di gioco ovvero "Attacco" "Difesa" e "Bilanciato"
 
-Ho testato i mazzi creati in un tool online ed effettivamente sono molto efficenti e reggono testa con mazzi molto più costosi 
+Ho testato i mazzi creati in un tool online ed effettivamente sono molto efficienti e reggono testa con mazzi molto più costosi 
 
 

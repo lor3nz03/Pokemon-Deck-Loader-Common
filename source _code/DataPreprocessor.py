@@ -152,9 +152,9 @@ class DataPreprocessor:
     def plot_pokemon_by_generation(self):
         generation_counts = self.data['generation'].value_counts().sort_index()
         generation_counts.plot(kind='bar', color='skyblue')
-        plt.title('Number of Pokémon by Generation')
-        plt.xlabel('Generation')
-        plt.ylabel('Number of Pokémon')
+        plt.title('Numero di pokemon per generazioni')
+        plt.xlabel('Generazioni')
+        plt.ylabel('Numero di Pokemon')
         plt.xticks(rotation=0)
         plt.show()
 
@@ -162,9 +162,9 @@ class DataPreprocessor:
     def plot_cards_by_artist(self):
         artist_counts = self.data['artist'].value_counts().head(10)  # Plot top 10 artists
         artist_counts.plot(kind='bar', color='lightgreen')
-        plt.title('Number of Cards by Artist')
-        plt.xlabel('Artist')
-        plt.ylabel('Number of Cards')
+        plt.title('Numero di carte per artista')
+        plt.xlabel('Artisti')
+        plt.ylabel('Numero di carte')
         plt.xticks(rotation=45, ha='right')
         plt.show()
 
@@ -173,8 +173,8 @@ class DataPreprocessor:
         self.data['types'] = self.data['types'].astype(str)  # Tramite questa linea di codice mi assicuro che sono tutte stringhe
         type_counts = self.data['types'].apply(lambda x: x.strip("[]").replace("'", "").split(", ")).explode().value_counts()
         type_counts.plot(kind='bar', color='salmon')
-        plt.title('Number of Pokémon by Type')
-        plt.xlabel('Type')
-        plt.ylabel('Number of Pokémon')
+        plt.title('Numero di pokemon per tipo')
+        plt.xlabel('Tipo')
+        plt.ylabel('Numero di pokemon')
         plt.xticks(rotation=45, ha='right')
         plt.show()

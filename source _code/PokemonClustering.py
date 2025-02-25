@@ -63,9 +63,9 @@ class PokemonClustering:
         if method == 'kmeans':
             self.apply_kmeans(**kwargs)
         elif method == 'dbscan':
-            self.apply_dbscan(**kwargs)
+            self.apply_dbscan( eps=0.5, min_samples=5)
         elif method == 'optics':
-            self.apply_optics(**kwargs)
+            self.apply_optics( min_samples=5, xi=0.05, min_cluster_size=0.1)
         elif method == 'agglomerative':
             self.apply_agglomerative(**kwargs)
         else:
@@ -79,7 +79,7 @@ class PokemonClustering:
         sns.scatterplot(x=X_pca[:,0], y=X_pca[:,1], hue=self.cluster_labels, palette='viridis', legend='full')
         if hasattr(self.kmeans, 'cluster_centers_'):
             centers_pca = pca.transform(self.kmeans.cluster_centers_)
-            plt.scatter(centers_pca[:, 0], centers_pca[:, 1], s=300, c='red', marker='X', label='Centroids')
+            plt.scatter(centers_pca[:, 0], centers_pca[:, 1], s=300, c='red', marker='X', label='Centroidi')
         
         plt.xlabel('PCA 1')
         plt.ylabel('PCA 2')

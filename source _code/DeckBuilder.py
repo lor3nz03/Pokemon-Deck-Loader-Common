@@ -42,19 +42,37 @@ class DeckBuilder:
                                 break
 
         return decks
-
+    
+    def suddivision(self, decks):
+        deck_types = {}
+        for i, deck in decks.items():
+            attack_count = sum(1 for pokemon in deck if pokemon['AVG_damage'] > 50)
+            tank_count = sum(1 for pokemon in deck if pokemon['hp'] > 100)
+            
+            if attack_count >= 3:
+                deck_types[i] = "Attack"
+            elif tank_count >= 2:
+                deck_types[i] = "Tank"
+            else:
+                deck_types[i] = "Balance"
+        
+        return deck_types
+    
     # Metodo per stampare su terminale i pokemon, utilizzo la libreria table per visualizzare meglio i deck
     def print_decks(self, decks):
+        deck_types = self.suddivision(decks)
         for i, deck in decks.items():
-            print(f'Mazzo {i + 1}:')
+            print(f'Mazzo {i + 1} ({deck_types[i]}):')
             table = []
             for pokemon in deck:
                 table.append([pokemon['name'], pokemon['hp'], pokemon['AVG_damage'], pokemon['generation']])
             print(tabulate(table, headers=["Name", "HP", "AVG Damage", "Generation", "Type"], tablefmt="grid"))
             print()
 
+
     # Metodo per visualizzare i deck tramite un grafico ceato con matplot, così vediamo pure se i deck sono bilanciati
     def visualize_decks(self, decks):
+        deck_types = self.suddivision(decks)
         for i, deck in decks.items():
             names = [pokemon['name'] for pokemon in deck]
             hp = [pokemon['hp'] for pokemon in deck]
@@ -69,7 +87,7 @@ class DeckBuilder:
 
             plt.xlabel('Pokémon')
             plt.ylabel('Values')
-            plt.title(f'Mazzo {i + 1}')
+            plt.title(f'Mazzo {i + 1} ({deck_types[i]}):')
             plt.xticks(index + bar_width / 2, names, rotation=45, ha='right')
             plt.legend()
 

@@ -1,52 +1,52 @@
 # Pokemon-Deck-Loader-Common
 
-Final Project for the course "Introduction to Data Mining"
+Progetto finale per il corso "Introduzione al Data Mining"
 
-## Project Overview
+## Panoramica del Progetto
 
-This project aims to preprocess, cluster, and build Pokémon decks using data from the Pokémon Trading Card Game (TCG). The project involves several steps, including data preprocessing, clustering Pokémon based on their attributes, and creating balanced common decks. The project also includes visualization of the data and the created decks.
+Questo progetto ha lo scopo di preprocessare, raggruppare e costruire mazzi di Pokémon utilizzando i dati del Gioco di Carte Collezionabili Pokémon (TCG). Il progetto prevede diverse fasi, tra cui il preprocessing dei dati, il raggruppamento dei Pokémon in base ai loro attributi e la creazione di mazzi comuni bilanciati. Il progetto include anche la visualizzazione dei dati e dei mazzi creati.
 
-## Classes and Their Functions
+## Classi e le loro Funzioni
 
 ### DataPreprocessor
-- **Purpose**: Preprocess the Pokémon TCG data.
-- **Methods**:
-  - `load_data()`: Loads the data from a CSV file.
-  - `clean_data()`: Cleans and preprocesses the data.
-  - `save_data(output_file_name)`: Saves the processed data to a CSV file.
-  - `plot_pokemon_by_generation()`: Plots the number of Pokémon by generation.
-  - `plot_cards_by_artist()`: Plots the number of cards by artist.
-  - `plot_pokemon_by_type()`: Plots the number of Pokémon by type.
-  - `get_processed_data()`: Returns the processed data.
+- **Scopo**: Preprocessare i dati del TCG Pokémon.
+- **Metodi**:
+  - `load_data()`: Carica i dati da un file CSV.
+  - `clean_data()`: Pulisce e preprocessa i dati.
+  - `save_data(output_file_name)`: Salva i dati processati in un file CSV.
+  - `plot_pokemon_by_generation()`: Visualizza il numero di Pokémon per generazione.
+  - `plot_cards_by_artist()`: Visualizza il numero di carte per artista.
+  - `plot_pokemon_by_type()`: Visualizza il numero di Pokémon per tipo.
+  - `get_processed_data()`: Restituisce i dati processati.
 
 ### PokemonClustering
-- **Purpose**: Cluster Pokémon based on their attributes.
-- **Methods**:
-  - `elbow_method(max_clusters)`: Determines the optimal number of clusters using the elbow method.
-  - `cluster(method, n_clusters)`: Clusters the data using the specified method (e.g., k-means).
-  - `visualize_clusters()`: Visualizes the clusters.
-  - `save_clusters_to_file(file_name)`: Saves the cluster assignments to a file.
+- **Scopo**: Raggruppare i Pokémon in base ai loro attributi.
+- **Metodi**:
+  - `elbow_method(max_clusters)`: Determina il numero ottimale di cluster utilizzando il metodo del gomito.
+  - `cluster(method, n_clusters)`: Raggruppa i dati utilizzando il metodo specificato (es. k-means).
+  - `visualize_clusters()`: Visualizza i cluster.
+  - `save_clusters_to_file(file_name)`: Salva le assegnazioni dei cluster in un file.
 
 ### DeckBuilder
-- **Purpose**: Create and visualize Pokémon decks.
-- **Methods**:
-  - `create_balanced_deck(pokemon_type, n_decks)`: Creates balanced decks based on the specified Pokémon type.
-  - `print_decks(decks)`: Prints the decks in a tabular format.
-  - `visualize_decks(decks)`: Visualizes the decks using bar charts.
-  - `get_valid_pokemon_type(preprocessor)`: Prompts the user to enter a valid Pokémon type.
+- **Scopo**: Creare e visualizzare mazzi di Pokémon.
+- **Metodi**:
+  - `create_balanced_deck(pokemon_type, n_decks)`: Crea mazzi bilanciati in base al tipo di Pokémon specificato.
+  - `suddivision(decks)`: Valuta ogni mazzo e assegna un tag "Attack", "Tank" o "Balance".
+  - `print_decks(decks)`: Stampa i mazzi in formato tabellare.
+  - `visualize_decks(decks)`: Visualizza i mazzi utilizzando grafici a barre.
+  - `get_valid_pokemon_type(preprocessor)`: Chiede all'utente di inserire un tipo di Pokémon valido.
 
-## Libraries Used
+## Librerie Utilizzate
 
-- `pandas`: For data manipulation and analysis.
-- `numpy`: For numerical operations.
-- `matplotlib`: For data visualization.
-- `tabulate`: For printing tables in a formatted way.
-- `scikit-learn`: For clustering algorithms.
+- `pandas`: Per la manipolazione e l'analisi dei dati.
+- `numpy`: Per operazioni numeriche.
+- `matplotlib`: Per la visualizzazione dei dati.
+- `tabulate`: Per stampare tabelle in modo formattato.
+- `scikit-learn`: Per algoritmi di clustering.
 
-## Installation
+## Installazione
 
-To install the required libraries, you can use `pip`. Run the following command:
+Per installare le librerie richieste, puoi usare `pip`. Esegui il seguente comando:
 
 ```sh
 pip install pandas numpy matplotlib tabulate scikit-learn
-```

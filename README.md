@@ -36,6 +36,7 @@ Questo progetto ha lo scopo di preprocessare, raggruppare e costruire mazzi di P
   - `visualize_decks(decks)`: Visualizza i mazzi utilizzando grafici a barre.
   - `get_valid_pokemon_type(preprocessor)`: Chiede all'utente di inserire un tipo di Pokémon valido.
 
+
 ## Librerie Utilizzate
 
 - `pandas`: Per la manipolazione e l'analisi dei dati.
@@ -51,5 +52,13 @@ Questo progetto ha lo scopo di preprocessare, raggruppare e costruire mazzi di P
 
 Per installare le librerie richieste, puoi usare `pip`. Esegui il seguente comando:
 
-```sh
+```bash
 pip install pandas numpy matplotlib seaborn tabulate scikit-learn
+```
+
+## Come esegurilo
+
+Per far partire il tool eseguire questo comando nella cartella source_code
+```bash
+python Main.py
+```

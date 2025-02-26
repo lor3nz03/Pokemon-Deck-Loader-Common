@@ -41,12 +41,15 @@ Questo progetto ha lo scopo di preprocessare, raggruppare e costruire mazzi di P
 - `pandas`: Per la manipolazione e l'analisi dei dati.
 - `numpy`: Per operazioni numeriche.
 - `matplotlib`: Per la visualizzazione dei dati.
+- `seaborn`: Per la visualizzazione dei dati.
 - `tabulate`: Per stampare tabelle in modo formattato.
 - `scikit-learn`: Per algoritmi di clustering.
+- `pathlib`: Per la gestione dei percorsi dei file.
+- `ast`: Per la conversione sicura di stringhe in oggetti Python.
 
 ## Installazione
 
 Per installare le librerie richieste, puoi usare `pip`. Esegui il seguente comando:
 
 ```sh
-pip install pandas numpy matplotlib tabulate scikit-learn
+pip install pandas numpy matplotlib seaborn tabulate scikit-learn

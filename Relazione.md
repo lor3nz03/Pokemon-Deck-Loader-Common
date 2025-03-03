@@ -15,7 +15,7 @@ a seconda del tipo di strategia che si vuole adottare.
 
 ### Preprocessing dei dati
 Per poter lavorare bene ho dovuto fare una grande pulizia del dataset andando a rimuovere alcune features, alcune feature le ho dovute modificare per esempio il campo "attack" che comprendeva in un unica stringa nome e valore di attacco, ho diviso questa feature in 2 features differenti. 
-Un'altra grande aggiunta al dataset è stata la feature gerarichic, è stata quella che mi ha richiesto più tempo per essere sviluppata in quanto va a creare l'intera catena evolutiva di ogni pokemon basandosi sulle features "evolveFrom" "evolveTo", siccome i pokemon possono avere più di una evoluzione ho creato una feature di appoggio chiamata "evolveTo2" che salva la seconda evoluzione di un pokemon se la ha, una volta utilizzata cancello la feature.
+Un'altra grande aggiunta al dataset è stata la feature gerarichic, è stata quella che mi ha richiesto più tempo per essere sviluppata in quanto va a creare l'intera catena evolutiva di ogni pokemon basandosi sulle features "evolveFrom" "evolveTo".
 L'obbiettivo è creare mazzi economici, quindi vado a fare un taglio al dataset selezionando solo i pokemon di rarità 'Rare Holo', 'Rare', 'Uncommon', 'Common'.
 Decido per maggiore chiarezza sul dataset di visualizzare il numero di pokemon per artista,generazione e tipo.
 

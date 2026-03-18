@@ -1,64 +1,150 @@
-# Pokemon-Deck-Loader-Common
+# Pokemon Deck Loader Common
 
-Progetto finale per il corso "Introduzione al Data Mining"
+![Build](https://img.shields.io/badge/build-lightgrey)
+![Version](https://img.shields.io/badge/version-lightgrey)
+![License](https://img.shields.io/badge/license-lightgrey)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 
-## Panoramica del Progetto
+Generate balanced, budget-oriented Pokémon TCG decks from historical card data (1999–2023) using preprocessing + clustering + rule-based deck composition.
 
-Questo progetto ha lo scopo di preprocessare, raggruppare e costruire mazzi di Pokémon utilizzando i dati del Gioco di Carte Collezionabili Pokémon (TCG). Il progetto prevede diverse fasi, tra cui il preprocessing dei dati, il raggruppamento dei Pokémon in base ai loro attributi e la creazione di mazzi comuni bilanciati. Il progetto include anche la visualizzazione dei dati e dei mazzi creati.
+## Table of Contents
 
-## Classi e le loro Funzioni
+- [What this project does](#what-this-project-does)
+- [Why this project is useful](#why-this-project-is-useful)
+- [How to get started](#how-to-get-started)
+- [Where to get help](#where-to-get-help)
+- [Who maintains and contributes](#who-maintains-and-contributes)
 
-### DataPreprocessor
-- **Scopo**: Preprocessare i dati del TCG Pokémon.
-- **Metodi**:
-  - `load_data()`: Carica i dati da un file CSV.
-  - `clean_data()`: Pulisce e preprocessa i dati.
-  - `save_data(output_file_name)`: Salva i dati processati in un file CSV.
-  - `plot_pokemon_by_generation()`: Visualizza il numero di Pokémon per generazione.
-  - `plot_cards_by_artist()`: Visualizza il numero di carte per artista.
-  - `plot_pokemon_by_type()`: Visualizza il numero di Pokémon per tipo.
-  - `get_processed_data()`: Restituisce i dati processati.
+## What this project does
 
-### PokemonClustering
-- **Scopo**: Raggruppare i Pokémon in base ai loro attributi.
-- **Metodi**:
-  - `elbow_method(max_clusters)`: Determina il numero ottimale di cluster utilizzando il metodo del gomito.
-  - `cluster(method, n_clusters)`: Raggruppa i dati utilizzando il metodo specificato (es. k-means).
-  - `visualize_clusters()`: Visualizza i cluster.
-  - `save_clusters_to_file(file_name)`: Salva le assegnazioni dei cluster in un file.
+This project loads a Pokémon TCG CSV dataset, cleans and enriches it, groups cards by battle profile, and automatically builds balanced decks for a user-selected Pokémon type.
 
-### DeckBuilder
-- **Scopo**: Creare e visualizzare mazzi di Pokémon.
-- **Metodi**:
-  - `create_balanced_deck(pokemon_type, n_decks)`: Crea mazzi bilanciati in base al tipo di Pokémon specificato.
-  - `suddivision(decks)`: Valuta ogni mazzo e assegna un tag "Attack", "Tank" o "Balance".
-  - `print_decks(decks)`: Stampa i mazzi in formato tabellare.
-  - `visualize_decks(decks)`: Visualizza i mazzi utilizzando grafici a barre.
-  - `get_valid_pokemon_type(preprocessor)`: Chiede all'utente di inserire un tipo di Pokémon valido.
+### Pipeline overview
 
+1. **Preprocess data** (`DataPreprocessor`)
+   - Filters to Pokémon cards and budget-friendly rarities (`Rare Holo`, `Rare`, `Uncommon`, `Common`)
+   - Extracts attack statistics (`AVG_damage`) from nested attack objects
+   - Builds evolution hierarchies (`gerarchic`) used during deck generation
+   - Saves cleaned dataset to [CSV/new.csv](CSV/new.csv)
 
-## Librerie Utilizzate
+2. **Cluster Pokémon** (`PokemonClustering`)
+   - Uses `hp` and `AVG_damage` features
+   - Supports multiple methods (`kmeans`, `dbscan`, `optics`, `agglomerative`)
+   - Stores cluster assignments to [list.txt](list.txt)
 
-- `pandas`: Per la manipolazione e l'analisi dei dati.
-- `numpy`: Per operazioni numeriche.
-- `matplotlib`: Per la visualizzazione dei dati.
-- `seaborn`: Per la visualizzazione dei dati.
-- `tabulate`: Per stampare tabelle in modo formattato.
-- `scikit-learn`: Per algoritmi di clustering.
-- `pathlib`: Per la gestione dei percorsi dei file.
-- `ast`: Per la conversione sicura di stringhe in oggetti Python.
+3. **Build decks** (`DeckBuilder`)
+   - Prompts user for a valid Pokémon type
+   - Creates up to 5 decks (12 Pokémon each) with evolution-aware composition
+   - Classifies each deck as `Attack`, `Tank`, or `Balance`
+   - Prints tabular output and shows deck charts
 
-## Installazione
+## Why this project is useful
 
-Per installare le librerie richieste, puoi usare `pip`. Esegui il seguente comando:
+- **Fast deck prototyping**: builds multiple decks from one type selection.
+- **Budget-oriented filtering**: keeps only common/uncommon/rare card classes.
+- **Data-driven balancing**: uses HP and average attack damage as scoring features.
+- **Evolution consistency**: avoids invalid evolution-only picks by adding linked chain cards.
+- **Exploratory workflow**: includes clustering and visualizations for quick analysis.
+
+## How to get started
+
+### Prerequisites
+
+- Python 3.9+
+- `pip`
+- A graphical environment for Matplotlib windows (plots are shown interactively)
+
+### Installation
+
+From the repository root:
+
+```bash
+python -m venv .venv
+```
+
+Windows (PowerShell):
+
+```bash
+.venv\Scripts\Activate.ps1
+```
+
+Install dependencies:
 
 ```bash
 pip install pandas numpy matplotlib seaborn tabulate scikit-learn
 ```
 
-## Come esegurilo
+### Run the project
 
-Per far partire il tool eseguire questo comando nella cartella source_code
+> Important: run from `source _code`, because `Main.py` expects relative paths from that directory.
+
 ```bash
+cd "source _code"
 python Main.py
 ```
+
+### Usage example
+
+When prompted, enter a valid type (for example `Water`, `Fire`, `Psychic`, etc.):
+
+```text
+Inserisci il tipo di pokemon per la generazione dei deck (Tipi validi: ...): Water
+```
+
+Expected outputs after a run:
+
+- Cleaned dataset: [CSV/new.csv](CSV/new.csv)
+- Cluster export: [list.txt](list.txt)
+- Interactive plots for data distribution, cluster visualization, and deck balance
+
+### Project structure
+
+```text
+CSV/
+  pokemon-tcg-data-master 1999-2023.csv
+  new.csv
+source _code/
+  Main.py
+  DataPreprocessor.py
+  PokemonClustering.py
+  DeckBuilder.py
+list.txt
+Relazione.md
+```
+
+## Where to get help
+
+- Functional walkthrough and project notes: [Relazione.md](Relazione.md)
+- Entry point and execution order: [source _code/Main.py](source%20_code/Main.py)
+- Data cleaning logic: [source _code/DataPreprocessor.py](source%20_code/DataPreprocessor.py)
+- Deck generation logic: [source _code/DeckBuilder.py](source%20_code/DeckBuilder.py)
+
+For questions, bugs, or improvements, open an issue in this repository with:
+
+- Python version
+- OS
+- full error trace (if any)
+- reproduction steps
+
+## Who maintains and contributes
+
+### Maintainer
+
+- **Lorenzo Di Bella** (original project author)
+
+### Contributing
+
+Contributions are welcome. To keep reviews fast:
+
+1. Open an issue describing the problem/feature.
+2. Create a focused branch (`feature/...` or `fix/...`).
+3. Keep pull requests small and include a short test/run note.
+4. Update docs when behavior or setup changes.
+
+---
+
+### Notes
+
+- Current repository does not include a `LICENSE` file.
+- Build/CI and semantic versioning are not yet configured.
+- Console prompts and some comments are currently in Italian.
